@@ -1,0 +1,36 @@
+SECURITY NOTES — KAUSTUBH PATTAR PORTFOLIO
+
+This is a static, front-end-only website. It has no login, database, payment flow,
+server-side form handler, API keys, or admin panel. That substantially reduces
+attack surface, but no public website can be guaranteed impossible to hack.
+
+Included:
+- Content Security Policy (CSP) meta policy for the standalone HTML version.
+- Hosting response-header rules in _headers (supported by Netlify and Cloudflare Pages).
+- X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy,
+  HSTS, COOP, CORP and X-Permitted-Cross-Domain-Policies.
+- No phone number displayed in the website.
+- No third-party scripts or analytics are embedded.
+- External Google Fonts are the only external page dependency; fallback system fonts work offline.
+- No secrets or credentials are stored in the HTML.
+
+IMPORTANT DEPLOYMENT CHECKLIST:
+1. Deploy only over HTTPS. Use a reputable static host such as Netlify, Cloudflare Pages,
+   or GitHub Pages. Netlify/Cloudflare Pages can apply the supplied _headers file.
+2. For GitHub Pages, configure equivalent security headers at a CDN/proxy such as Cloudflare;
+   GitHub Pages does not let a repository set arbitrary response headers.
+3. The CSP allows inline styles and scripts because this delivered version contains inline
+   CSS/JavaScript. For stronger CSP, move CSS and JS into separate files and use a nonce/hash
+   policy; do not simply remove unsafe-inline or the current page's styles/scripts will stop working.
+4. Keep the hosting account protected with a unique password and multi-factor authentication.
+   Protect the source-code repository with MFA, least-privilege access, and branch protection.
+5. Do not add unknown plugins, scripts, forms, trackers, or libraries. Update dependencies if
+   the site is later converted to a framework-based application.
+6. If adding a contact form, use a reputable form provider with spam protection, validation,
+   rate limiting and server-side handling. Never put API keys or SMTP passwords in browser code.
+7. Back up the site and keep the domain registrar account protected with MFA and domain lock.
+8. Test the deployed site with Mozilla Observatory and securityheaders.com after deployment.
+
+The _headers file is a hosting configuration file, not a guarantee by itself. Verify the
+actual response headers on the live domain after deployment. HSTS should only be enabled once
+HTTPS is correctly configured for the domain and all subdomains.
